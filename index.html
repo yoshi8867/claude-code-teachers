@@ -54,26 +54,17 @@ body.present.notes .wrap.on .note{display:block;position:fixed;left:0;right:0;bo
 body.list main{max-width:1000px;margin:0 auto;padding:80px 16px 60px;display:flex;flex-direction:column;gap:36px}
 body.list .wrap{border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.08);cursor:pointer}
 body.list .note{display:block}
-.bar-top{position:fixed;top:12px;right:12px;z-index:9;display:flex;gap:8px}
-.bar-top button{font:inherit;font-size:14px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
-body.present .bar-top{opacity:.25}
-body.present .bar-top:hover{opacity:1}
 .hint{position:fixed;left:12px;top:16px;font-size:13px;color:var(--sub)}
 body.present .hint{display:none}
-@media print{.bar-top,.hint{display:none}body.list .wrap{break-inside:avoid;box-shadow:none;border:1px solid #ccc}}
+@media print{.hint{display:none}body.list .wrap{break-inside:avoid;box-shadow:none;border:1px solid #ccc}}
 </style>
 </head>
 <body class="list">
 <div class="hint">슬라이드를 클릭하면 발표 모드로 시작 · ← → 이동 · N 대본 · Esc 목록</div>
-<div class="bar-top">
-  <button id="bMode">▶ 발표 모드</button>
-  <button id="bNote">🎤 대본 보기</button>
-</div>
 <main>
 
 <!-- 1 표지 -->
 <div class="wrap"><section class="slide"><div class="in center">
-  <div class="kicker">교사 연수 · 15분</div>
   <h1>대화만 하던 AI에서<br>일을 해주는 AI로</h1>
   <p class="sub" style="font-size:1.5em">선생님을 위한 <b class="hl">클로드 코드(Claude Code)</b> 입문</p>
 </div></section>
@@ -156,22 +147,6 @@ body.present .hint{display:none}
 수업 아이디어만 말해도 활동지나 간단한 퀴즈 웹페이지까지 만들어 줍니다.
 사실 지금 보고 계신 이 발표 자료도 클로드 코드에게 말로 부탁해서 만들고, 인터넷에 올린 것입니다.</aside></div>
 
-<!-- 6 회사별 비교 -->
-<div class="wrap"><section class="slide"><div class="in">
-  <div class="kicker">2. AI 회사별 비교</div>
-  <h2>회사마다 '대화형 AI'와 'AI 에이전트'가 있어요</h2>
-  <table>
-    <tr><th>회사</th><th>대화형 AI (브라우저)</th><th>대표 모델</th><th>AI 에이전트 (내 컴퓨터)</th></tr>
-    <tr><td>OpenAI</td><td>ChatGPT</td><td>GPT 시리즈</td><td>Codex</td></tr>
-    <tr class="me"><td>Anthropic</td><td>Claude</td><td>Fable · Opus · Sonnet · Haiku</td><td>Claude Code</td></tr>
-    <tr><td>Google</td><td>Gemini</td><td>Gemini 시리즈</td><td>Antigravity</td></tr>
-  </table>
-  <div class="box a"><p>💳 AI 에이전트는 모두 <b>구독 서비스</b>예요. 제대로 쓰려면 <b class="hl">유료 구독이 필요</b>합니다.</p></div>
-</div><div class="num">6</div></section>
-<aside class="note">클로드 말고도 비슷한 서비스가 있습니다. 표로 간단히 보겠습니다.
-ChatGPT를 만든 OpenAI에는 'Codex'라는 AI 에이전트가 있고, 구글의 Gemini에는 'Antigravity'가 있습니다. 오늘 소개하는 Anthropic이라는 회사의 클로드에는 '클로드 코드'가 있고요.
-이름만 다를 뿐 개념은 비슷합니다. 대화형 AI는 무료로 써볼 수 있지만, 이런 AI 에이전트는 기본적으로 구독 서비스여서 제대로 쓰려면 돈을 내야 합니다.</aside></div>
-
 <!-- 7 구독 플랜 -->
 <div class="wrap"><section class="slide"><div class="in">
   <div class="kicker">3. 구독 플랜</div>
@@ -182,7 +157,7 @@ ChatGPT를 만든 OpenAI에는 'Codex'라는 AI 에이전트가 있고, 구글�
     <div class="box"><h3 style="margin-top:2.3em">Max 20x</h3><p class="big">$200<span style="font-size:.35em">/월</span></p><p class="sub">&nbsp;</p><div class="bar" style="width:100%;margin:.8em 0"></div><p>사용량: <b>Pro의 20배</b><br>개발자·전문가용</p></div>
   </div>
   <p>✅ 모두 <b>정액제</b> — 매달 정해진 금액만 냄. 많이 써도 추가 요금(후불) 없음, 대신 한도에 닿으면 잠시 쉬어야 함</p>
-</div><div class="num">7</div></section>
+</div><div class="num">6</div></section>
 <aside class="note">클로드 코드를 쓰려면 구독을 해야 하는데, 개인용과 기업용이 있습니다. 개인용은 세 가지예요.
 가장 저렴한 Pro는 한 달에 20달러, 우리나라에서는 부가세가 붙어서 약 22달러입니다. 그 위로 100달러짜리 Max 5배, 200달러짜리 Max 20배 플랜이 있어요.
 차이는 '얼마나 많이 쓸 수 있느냐'입니다. AI가 읽고 쓰는 글자의 양을 '토큰'이라고 하는데, Max 5x는 Pro보다 5배, Max 20x는 20배 많이 쓸 수 있습니다.
@@ -200,7 +175,7 @@ ChatGPT를 만든 OpenAI에는 'Codex'라는 AI 에이전트가 있고, 구글�
     <div class="box g"><div class="big">③</div><h3 style="margin-top:.5em">다시 새 접시</h3><p>오후 2시가 되면 사용량이 <b>다시 가득</b> 채워져요</p></div>
   </div>
   <p class="sub">※ 이와 별도로 '1주일 총량' 한도도 있어요. 한 번에 몰아 쓰기보다 나눠 쓰는 게 유리합니다.</p>
-</div><div class="num">8</div></section>
+</div><div class="num">7</div></section>
 <aside class="note">요금제에서 조금 낯선 개념이 '슬라이딩 윈도우'인데요, 어렵지 않습니다.
 뷔페를 떠올려 보세요. 한 번에 접시에 담을 수 있는 양이 정해져 있다고 생각하시면 됩니다.
 제가 오전 9시에 처음 클로드 코드를 쓰면 그때부터 5시간 타이머가 시작돼요. 그 5시간 동안 정해진 양을 다 쓰면 잠깐 멈추게 되고, 오후 2시가 되면 다시 새 접시처럼 사용량이 가득 채워집니다.
@@ -219,7 +194,7 @@ ChatGPT를 만든 OpenAI에는 'Codex'라는 AI 에이전트가 있고, 구글�
     <tr><td><b>Fable</b></td><td>🚀 최신 고성능</td><td>가장 최근에 나온 고성능 모델</td><td>정말 어려운 작업</td></tr>
   </table>
   <p>🔄 클로드 코드에서 <code>/model</code> 이라고 입력하면 언제든 바꿀 수 있어요.</p>
-</div><div class="num">9</div></section>
+</div><div class="num">8</div></section>
 <aside class="note">클로드 안에도 여러 종류의 '두뇌', 즉 모델이 있습니다. 자동차에 비유해 볼게요.
 Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. Sonnet은 승용차처럼 속도와 성능이 균형 잡혀 있어서 대부분의 일에 적당합니다. Opus는 트럭처럼 힘이 세서 복잡하고 큰 작업을 잘하지만, 그만큼 사용량을 많이 씁니다. Fable은 가장 최근에 나온 고성능 모델입니다.
 모델은 클로드 코드에서 슬래시 모델, '/model'이라고 입력하면 언제든 바꿀 수 있습니다.</aside></div>
@@ -232,7 +207,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
     <div class="box"><p style="font-size:1.4em">🚚 동네 편의점에 가는데<br><b>트럭을 몰 필요는 없죠</b></p><p class="sub" style="margin-top:1em">좋은 모델일수록 한 번에 쓰는 사용량(토큰)이 커요</p></div>
     <div class="box a"><h3>똑똑하게 나눠 쓰기</h3><ul><li>간단한 일 → <b>Haiku / Sonnet</b></li><li>어렵고 중요한 일 → <b>Opus / Fable</b></li><li>결과: 같은 Pro 요금으로 <b class="hl">훨씬 오래</b> 사용</li></ul></div>
   </div>
-</div><div class="num">10</div></section>
+</div><div class="num">9</div></section>
 <aside class="note">그러면 무조건 제일 좋은 모델을 쓰면 되지 않을까요? 꼭 그렇지는 않습니다.
 편의점에 우유 사러 가는데 트럭을 몰고 갈 필요는 없잖아요. 좋은 모델일수록 한 번 일할 때 쓰는 사용량, 즉 토큰을 더 많이 씁니다. 그러면 앞에서 말씀드린 5시간 한도에 금방 닿게 되죠.
 그래서 간단한 일은 가벼운 모델로, 정말 어렵고 중요한 일만 고성능 모델로 하면 같은 요금으로 훨씬 오래 쓸 수 있습니다.</aside></div>
@@ -246,7 +221,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
     <div class="box g"><div class="big">💬</div><h3 style="margin-top:.5em">세션 (Session)</h3><p><b>하나의 상담 시간</b><br>클로드 코드를 켜서 끌 때까지의 한 번의 대화. 새 세션 = 깨끗한 새 책상.</p></div>
     <div class="box a"><div class="big">📒</div><h3 style="margin-top:.5em">메모리 (Memory)</h3><p><b>AI의 업무 수첩</b><br>세션이 바뀌어도 기억해야 할 것. 예: "나는 중학교 2학년 국어 교사야"</p></div>
   </div>
-</div><div class="num">11</div></section>
+</div><div class="num">10</div></section>
 <aside class="note">이제 클로드 코드를 잘 쓰기 위해 꼭 알아야 할 세 단어입니다.
 첫째, 컨텍스트. 책상 위에 펼쳐 놓은 자료라고 생각하세요. 지금 대화에서 AI가 기억하고 있는 모든 내용입니다. 중요한 건 이 책상의 크기가 정해져 있다는 점이에요.
 둘째, 세션. 한 번의 상담 시간입니다. 클로드 코드를 켜서 끌 때까지의 대화 한 묶음이에요. 새 세션을 시작하면 깨끗한 새 책상에서 시작합니다.
@@ -261,7 +236,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
     <div class="box"><h3>🍂 컨텍스트 부패</h3><p>대화가 너무 길어져 책상이 꽉 참<br>→ 앞 내용을 <b>잊거나 엉뚱한 답</b></p></div>
   </div>
   <div class="box a"><p>💸 그 결과: AI가 매번 쓸모없는 자료까지 다시 읽느라 <b class="hl">토큰(사용량)이 낭비</b>되고, 답의 품질도 떨어져요.</p></div>
-</div><div class="num">12</div></section>
+</div><div class="num">11</div></section>
 <aside class="note">여기서 많은 분들이 놓치는 부분이 있습니다. 바로 컨텍스트, 즉 책상 관리입니다.
 가정통신문 이야기를 하다가 갑자기 시험 문제를 물어보고, 다시 학급 행사 이야기를 하면 서로 다른 자료가 한 책상에 뒤섞이게 됩니다. 이걸 '컨텍스트 오염'이라고 해요.
 또 대화가 너무 길어져서 책상이 꽉 차면, AI가 앞의 내용을 잊어버리거나 엉뚱한 답을 하기 시작합니다. 이걸 '컨텍스트 부패'라고 합니다.
@@ -276,7 +251,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
     <div class="box b"><h3>② 길어지면 요약 정리</h3><p><code>/compact</code> 입력</p><p class="sub" style="margin-top:.6em">📝 지금까지 대화를 짧게 요약해서 책상 공간 확보 → 부패 방지</p></div>
     <div class="box a"><h3>③ 잘못 간 부분만 되돌리기</h3><p><kbd>Esc</kbd> 두 번 또는 <code>/rewind</code></p><p class="sub" style="margin-top:.6em">⏪ 엉뚱하게 흘러간 대화를 원하는 지점까지 지우고 다시 시작</p></div>
   </div>
-</div><div class="num">13</div></section>
+</div><div class="num">12</div></section>
 <aside class="note">그럼 책상은 어떻게 정리할까요? 세 가지만 기억하세요.
 첫째, 하는 일이 바뀌면 새 세션을 시작합니다. 슬래시 클리어, '/clear'를 입력하거나 껐다 켜면 됩니다. 한 세션에는 한 가지 일, 이것만 지켜도 오염을 크게 줄일 수 있어요.
 둘째, 대화가 길어지면 슬래시 컴팩트, '/compact'를 입력합니다. 지금까지 대화를 짧게 요약해서 책상 공간을 확보해 줍니다. 부패를 막는 방법이에요.
@@ -292,7 +267,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
   <div class="step"><div class="n">3</div><p><b>로그인하기</b> — 작업할 폴더에서 <code>claude</code> 실행 → 브라우저가 열리면 클로드 계정으로 로그인</p></div>
   <div class="step"><div class="n">4</div><p><b>말로 부탁하기</b> — "이 폴더에 있는 파일들이 뭔지 설명해 줘" 처럼 평소 말투로 시작!</p></div>
   <p class="sub">💡 처음엔 중요한 파일이 없는 <b>연습용 폴더</b>에서 시작하세요. 파일을 고치기 전에 클로드가 허락을 물어봐요.</p>
-</div><div class="num">14</div></section>
+</div><div class="num">13</div></section>
 <aside class="note">마지막으로 시작하는 방법입니다. 네 단계면 됩니다.
 첫째, claude.ai에 가입하고 Pro 플랜을 결제합니다.
 둘째, 설치입니다. 가장 쉬운 방법은 클로드 데스크톱 앱을 설치해서 'Code' 탭을 쓰는 거예요. 검은 화면이 익숙하신 분은 화면의 명령어 한 줄로도 설치할 수 있습니다.
@@ -310,7 +285,7 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
     <div class="box g"><h3>🧹 책상은 깨끗하게</h3><p><code>/clear</code> · <code>/compact</code> · <kbd>Esc</kbd><kbd>Esc</kbd></p></div>
   </div>
   <p class="sub" style="margin-top:1.5em;font-size:1.4em">감사합니다 · 질문 받겠습니다 🙋</p>
-</div><div class="num">15</div></section>
+</div><div class="num">14</div></section>
 <aside class="note">오늘 내용을 정리하겠습니다.
 첫째, 질문은 클로드로, 실제 일을 맡기려면 클로드 코드를 쓰세요. 선생님들께는 Pro 플랜이면 충분합니다.
 둘째, 모델은 일의 크기에 맞게 골라 쓰세요.
@@ -321,11 +296,9 @@ Haiku는 자전거처럼 가볍고 빠릅니다. 간단한 질문에 좋아요. 
 <script>
 const W=[...document.querySelectorAll('.wrap')],B=document.body;let i=0;
 const show=n=>{i=Math.max(0,Math.min(W.length-1,n));W.forEach((w,k)=>w.classList.toggle('on',k===i));history.replaceState(null,'','#'+(i+1))};
-const present=n=>{B.className='present'+(B.classList.contains('notes')?' notes':'');show(n);bMode.textContent='☰ 목록 보기';document.documentElement.requestFullscreen?.().catch(()=>{})};
-const list=()=>{B.className='list';bMode.textContent='▶ 발표 모드';document.fullscreenElement&&document.exitFullscreen();W[i].scrollIntoView()};
+const present=n=>{B.className='present'+(B.classList.contains('notes')?' notes':'');show(n);document.documentElement.requestFullscreen?.().catch(()=>{})};
+const list=()=>{B.className='list';document.fullscreenElement&&document.exitFullscreen();W[i].scrollIntoView()};
 W.forEach((w,k)=>w.querySelector('.slide').onclick=()=>B.classList.contains('list')?present(k):show(i+1));
-bMode.onclick=()=>B.classList.contains('list')?present(i):list();
-bNote.onclick=()=>B.classList.toggle('notes');
 addEventListener('keydown',e=>{if(!B.classList.contains('present'))return;
   if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}
   else if(['ArrowLeft','PageUp'].includes(e.key))show(i-1);
