@@ -47,7 +47,7 @@ body.list main{padding-bottom:120px}
 <main id="m">불러오는 중…</main>
 <script>
 // ponytail: index.html을 그대로 불러와 쓰므로 발표 자료와 편집본이 따로 놀 일이 없음 (file:// 에선 fetch 불가 → GitHub Pages 주소로 열기)
-const BASE={font:'',size:100,color:'#1f1d1a'},KEY='edit-draft';
+const BASE={font:'',size:100,color:'#000000'},KEY='edit-draft';
 let S=[],cur=0,draft={};
 try{draft=JSON.parse(localStorage.getItem(KEY))||{}}catch{}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(draft))}catch{}};
@@ -65,7 +65,7 @@ fetch('index.html').then(r=>r.text()).then(html=>{
     ta.value=draft[k]?.request||'';
     ta.oninput=()=>{(draft[k]??={}).request=ta.value;save()};
     slot.append(w,ta);m.append(slot);
-    S.push({w,ta,st,title:(w.querySelector('h1,h2')?.textContent||'').replace(/\s+/g,' ').trim()});
+    S.push({w,ta,st,title:(w.querySelector('h1,h2')?.innerText||'').replace(/\s+/g,' ').trim()});
     apply(k);
   });
   S.forEach(s=>io.observe(s.w));pick(0);
