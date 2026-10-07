@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>발표 자료 편집</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;900&family=Gowun+Dodum&family=Jua&display=swap">
+<style>
+.req{display:block;width:100%;min-height:90px;margin-top:10px;padding:12px 14px;font:inherit;font-size:15px;line-height:1.6;border:2px dashed #c96442;border-radius:10px;background:#fff;resize:vertical}
+.req:not(:placeholder-shown){border-style:solid;background:#fff8f4}
+.slot.cur .wrap{outline:3px solid #2f6db5;outline-offset:4px}
+.fab{position:fixed;z-index:20;border:none;border-radius:28px;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer}
+#copy{right:16px;bottom:16px;padding:14px 22px;background:#c96442;color:#fff;font-size:16px}
+#tog{left:16px;bottom:16px;padding:14px 18px;background:#2a2723;color:#fff;font-size:16px}
+#panel{position:fixed;z-index:20;left:16px;bottom:76px;width:min(300px,calc(100vw - 32px));background:#fff;border:1px solid #e3ddd1;border-radius:14px;padding:14px 16px;box-shadow:0 6px 24px rgba(0,0,0,.18);font-size:14px;display:flex;flex-direction:column;gap:10px}
+#panel[hidden]{display:none}
+#panel label{display:flex;flex-direction:column;gap:4px;font-weight:600}
+#panel select,#panel input[type=range]{width:100%;font:inherit}
+#panel input[type=color]{width:100%;height:34px;border:1px solid #e3ddd1;border-radius:6px;background:#fff}
+#panel .btns{display:flex;gap:6px}
+#panel .btns button{flex:1;padding:8px;font:inherit;font-size:13px;border:1px solid #e3ddd1;border-radius:8px;background:#f4f1ea;cursor:pointer}
+#who{color:#2f6db5;font-weight:700}
+body.list main{padding-bottom:120px}
+#toast{position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#2a2723;color:#fff;padding:10px 18px;border-radius:20px;z-index:30;display:none}
+</style>
+</head>
+<body class="list">
+<div id="toast"></div>
+<button class="fab" id="tog">🎨 스타일</button>
+<button class="fab" id="copy">📋 copy</button>
+<div id="panel" hidden>
+  <div><span id="who">1번</span> 슬라이드 편집 중 <span style="color:#6b655c">(화면 가운데 슬라이드)</span></div>
+  <label>폰트
+    <select id="font">
+      <option value="">기본 (Pretendard)</option>
+      <option>Nanum Gothic</option>
+      <option>Noto Serif KR</option>
+      <option>Gowun Dodum</option>
+      <option>Jua</option>
+      <option>Malgun Gothic</option>
+    </select></label>
+  <label>글씨 크기 <span id="sizeV"></span><input type="range" id="size" min="70" max="140" step="5"></label>
+  <label>제목 색상<input type="color" id="color"></label>
+  <div class="btns"><button id="all">모든 슬라이드에 적용</button><button id="reset">이 슬라이드 초기화</button></div>
+  <div class="btns"><button id="clear">요청사항 전부 지우기</button></div>
+</div>
+<main id="m">불러오는 중…</main>
+<script>
+// ponytail: index.html을 그대로 불러와 쓰므로 발표 자료와 편집본이 따로 놀 일이 없음 (file:// 에선 fetch 불가 → GitHub Pages 주소로 열기)
+const BASE={font:'',size:100,color:'#1f1d1a'},KEY='edit-draft';
+let S=[],cur=0,draft={};
+try{draft=JSON.parse(localStorage.getItem(KEY))||{}}catch{}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(draft))}catch{}};
+const toast=t=>{toast.el.textContent=t;toast.el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>toast.el.style.display='none',1800)};toast.el=document.getElementById('toast');
+
+fetch('index.html').then(r=>r.text()).then(html=>{
+  const d=new DOMParser().parseFromString(html,'text/html');
+  d.querySelectorAll('head link[rel=stylesheet],head style').forEach(e=>document.head.prepend(e));
+  m.innerHTML='';
+  d.querySelectorAll('main .wrap').forEach((w,k)=>{
+    const slot=document.createElement('div');slot.className='slot';
+    const ta=document.createElement('textarea');ta.className='req';
+    ta.placeholder=`✏️ ${k+1}번 슬라이드 수정 요청사항 (없으면 비워두세요)`;
+    const st={...BASE,...(draft[k]?.style||{})};
+    ta.value=draft[k]?.request||'';
+    ta.oninput=()=>{(draft[k]??={}).request=ta.value;save()};
+    slot.append(w,ta);m.append(slot);
+    S.push({w,ta,st,title:(w.querySelector('h1,h2')?.textContent||'').replace(/\s+/g,' ').trim()});
+    apply(k);
+  });
+  S.forEach(s=>io.observe(s.w));pick(0);
+}).catch(()=>m.textContent='index.html을 불러오지 못했어요. GitHub Pages 주소(…/edit.html)로 열어주세요.');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&pick(S.findIndex(s=>s.w===e.target))),{rootMargin:'-45% 0px -45% 0px'});
+function apply(k){const {w,st}=S[k],inn=w.querySelector('.in');
+  inn.style.fontFamily=st.font?`'${st.font}',Pretendard,sans-serif`:'';
+  inn.style.fontSize=1.65*st.size/100+'cqw';
+  w.querySelectorAll('h1,h2').forEach(h=>h.style.color=st.color===BASE.color?'':st.color);
+  const changed=Object.keys(BASE).some(x=>st[x]!==BASE[x]);
+  if(changed)(draft[k]??={}).style={...st};else if(draft[k])delete draft[k].style;save()}
+function pick(k){if(k<0)return;cur=k;S.forEach((s,i)=>s.w.parentNode.classList.toggle('cur',i===k));
+  who.textContent=k+1+'번';const st=S[k].st;font.value=st.font;size.value=st.size;sizeV.textContent=st.size+'%';color.value=st.color}
+font.oninput=()=>{S[cur].st.font=font.value;apply(cur)};
+size.oninput=()=>{S[cur].st.size=+size.value;sizeV.textContent=size.value+'%';apply(cur)};
+color.oninput=()=>{S[cur].st.color=color.value;apply(cur)};
+all.onclick=()=>{const v={...S[cur].st};S.forEach((s,k)=>{s.st={...v};apply(k)});toast('모든 슬라이드에 적용했어요')};
+reset.onclick=()=>{S[cur].st={...BASE};apply(cur);pick(cur)};
+clear.onclick=()=>{if(!confirm('적은 요청사항과 스타일 변경을 모두 지울까요?'))return;draft={};save();S.forEach((s,k)=>{s.ta.value='';s.st={...BASE};apply(k)});pick(cur)};
+tog.onclick=()=>panel.hidden=!panel.hidden;
+
+copy.onclick=async()=>{
+  const slides=S.map((s,k)=>{const o={slide:k+1,title:s.title},r=s.ta.value.trim();
+    if(r)o.request=r;if(draft[k]?.style)o.style={...draft[k].style,fontSize:draft[k].style.size+'%'},delete o.style.size;
+    return o}).filter(o=>o.request||o.style);
+  if(!slides.length)return toast('적은 수정 요청사항이 없어요');
+  const json=JSON.stringify({file:'index.html',slides},null,2);
+  try{await navigator.clipboard.writeText(json);toast(`✅ ${slides.length}개 슬라이드 요청을 복사했어요`)}
+  catch{prompt('자동 복사가 안 돼요. 아래 내용을 길게 눌러 복사하세요.',json)}
+};
+</script>
+</body>
+</html>
