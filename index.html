@@ -56,7 +56,8 @@ body.list main{max-width:1000px;margin:0 auto;padding:80px 16px 60px;display:fle
 body.list .wrap{border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.08);cursor:pointer}
 .hint{position:fixed;left:12px;top:16px;font-size:13px;color:var(--sub)}
 body.present .hint{display:none}
-@media print{.hint{display:none}body.list .wrap{break-inside:avoid;box-shadow:none;border:1px solid #ccc}}
+@page{size:1280px 720px;margin:0}
+@media print{.hint{display:none}body{background:#fff}body.list main{padding:0;gap:0;max-width:none}body.list .wrap{width:1280px;border-radius:0;box-shadow:none;break-after:page}}
 </style>
 </head>
 <body class="list">
